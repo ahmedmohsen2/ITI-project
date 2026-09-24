@@ -1,0 +1,63 @@
+erDiagram
+    USER ||--o| CART : owns
+    USER ||--o{ ORDER : places
+    USER ||--o{ USER_INTERACTION : generates
+    CATEGORY ||--o{ PRODUCT : groups
+    CATEGORY ||--o{ USER_INTERACTION : context
+    CART ||--o{ CART_ITEM : contains
+    PRODUCT ||--o{ CART_ITEM : selected
+    ORDER ||--|{ ORDER_ITEM : contains
+    PRODUCT ||--o{ ORDER_ITEM : snapshots
+    PRODUCT ||--o{ USER_INTERACTION : tracked
+    USER {
+      int id PK
+      string username UK
+      string email
+    }
+    CATEGORY {
+      int id PK
+      string name UK
+      string slug UK
+      boolean active
+    }
+    PRODUCT {
+      int id PK
+      int category_id FK
+      string name
+      string slug UK
+      decimal price
+      int stock_quantity
+      boolean active
+    }
+    CART {
+      int id PK
+      int user_id FK
+      string session_key UK
+    }
+    CART_ITEM {
+      int id PK
+      int cart_id FK
+      int product_id FK
+      int quantity
+    }
+    ORDER {
+      int id PK
+      int user_id FK
+      decimal total_amount
+      string status
+    }
+    ORDER_ITEM {
+      int id PK
+      int order_id FK
+      int product_id FK
+      decimal unit_price
+      int quantity
+    }
+    USER_INTERACTION {
+      int id PK
+      int user_id FK
+      int product_id FK
+      int category_id FK
+      string kind
+      datetime created_at
+    }
